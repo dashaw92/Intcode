@@ -1,0 +1,44 @@
+V1 (Day 2):
+
+Instructions:
+
+| Intcode | Name         | Length
++---------+--------------+--------
+| 1       | Add          | 4
+| 2       | Multiply     | 4
+| 99      | Halt         | 1
+
+Modes:
+| Mode       | Description                  |
++------------+------------------------------+
+| Position   | op_a = rom[rom[ip + 1]]      |
+
+-----------------------------------------------------------------------------
+
+V2 (Day 5):
+
+
+Instructions:
+
+| Intcode | Name         | Length
++---------+--------------+--------
+| xxx03   | In           | 2
+| xxx04   | Out          | 2
+
+01002
+|||^^
+||| +-----> intcode
+||+-----> mode of 1st param
+|+----> mode of 2nd param
++----> mode of 3rd param
+
+mode params default to 0
+0 => Position mode
+1 => Immediate mode
+
+Modes:
+| Mode       | Description                  |
++------------+------------------------------+
+| Immediate  | op_a = rom[ip + 1]           |
+
+-----------------------------------------------------------------------------

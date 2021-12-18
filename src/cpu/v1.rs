@@ -10,7 +10,7 @@ impl Cpu for V1Cpu {
             1 => Op::Add,
             2 => Op::Mul,
             _ => return Execution::Halted,
-    };
+        };
 
         let src_a = rom[state.ip + 1];
         let src_b = rom[state.ip + 2];
