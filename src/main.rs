@@ -10,7 +10,7 @@ fn main() {
 
     let mut buf = String::new();
     lock.read_line(&mut buf).expect("Unable to read from STDIN!");
-    // demo rom
+    
     let rom = Rom::from_string(buf);
 
     let mut computer = Computer::build(&V1Cpu, rom);

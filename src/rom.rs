@@ -1,29 +1,38 @@
-use std::ops::{Index, Deref, RangeInclusive, IndexMut};
+use std::borrow::Cow;
+use std::ops::{Index, IndexMut};
 
 use crate::result::Result;
 use crate::error::Error;
 
 #[derive(Debug)]
 pub struct Rom {
+    original: Vec<i32>,
     memory: Vec<i32>,
 }
 
 impl Rom {
     pub fn new<'a, const N: usize>(memory: impl Into<&'a [i32; N]>) -> Self {
-       Rom {
-            memory: memory.into().to_vec(),
-       }
+        let original = memory.into().to_vec();
+        Rom {
+            original: original.clone(),
+            memory: original,
+        }
     }
 
     pub fn from_string(tape: impl AsRef<str>) -> Self {
-        let memory = tape.as_ref()
+        let original: Vec<i32> = tape.as_ref()
             .split(",")
             .map(str::trim)
             .filter_map(|x| x.parse().ok())
             .collect();
         Self {
-            memory
+            original: original.clone(),
+            memory: original,
         }
+    }
+
+    pub fn reset(&mut self) {
+        self.memory = self.original.clone();
     }
 }
 

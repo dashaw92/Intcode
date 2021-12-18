@@ -60,6 +60,12 @@ impl<'cpu> Computer<'cpu> {
     pub fn rom(&self) -> &Rom {
         &self.rom
     }
+
+    pub fn reset(&mut self) {
+        self.rom.reset();
+        self.state.reset();
+        self.stdin_buf.clear();
+    }
 }
 
 impl State {
@@ -73,5 +79,10 @@ impl State {
     pub fn inc(&mut self, len: usize) {
         self.ip += len;
         self.steps += 1;
+    }
+
+    fn reset(&mut self) {
+        self.ip = 0;
+        self.steps = 0;
     }
 }
