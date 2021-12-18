@@ -18,6 +18,7 @@ impl Rom {
     pub fn from_string(tape: impl AsRef<str>) -> Self {
         let memory = tape.as_ref()
             .split(",")
+            .map(str::trim)
             .filter_map(|x| x.parse().ok())
             .collect();
         Self {

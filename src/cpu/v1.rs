@@ -47,3 +47,24 @@ impl Op {
         }
     }
 }
+
+#[cfg(test)]
+mod v1test {
+    use super::V1Cpu;
+    use crate::prelude::*;
+    use std::fs::read_to_string;
+
+    #[test]
+    fn day2() {
+        let mut rom = Rom::from_string(read_to_string("day2.in").unwrap());
+
+        rom[1] = 12;
+        rom[2] = 2;
+
+        let mut computer = Computer::build(&V1Cpu, rom);
+
+        computer.run();
+        let rom = computer.rom();
+        assert_eq!(2692315, rom[0]);
+    }
+}
