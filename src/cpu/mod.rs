@@ -4,5 +4,10 @@ use crate::computer::State;
 pub mod v1;
 
 pub trait Cpu {
-    fn exec(&mut self, state: &mut State, rom: &mut Rom);
+    fn exec(&self, state: &mut State, rom: &mut Rom) -> Execution;
+}
+
+pub enum Execution {
+    Normal,
+    Halted,
 }

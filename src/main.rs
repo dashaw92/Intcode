@@ -1,20 +1,24 @@
+use std::fs::read_to_string;
+
 use intcode::rom::Rom;
 use intcode::cpu::v1::V1Cpu;
 use intcode::computer::Computer;
 
-//use std::io::Cursor;
-use std::io::{stdin, stdout};
-
 fn main() {
-    let rom = Rom::new(&[1,2,3]);
+    /* demo rom
+    let rom = Rom::new(&[
+        1,9,10,3,2,3,11,0,99,30,40,50
+    ]);
+    */
 
-    //let mut cursor = Cursor::new(String::from("123\n"));
-    let stdin = stdin();
-    let mut in_handle = stdin.lock();
-    let stdout = stdout();
-    let mut out_handle = stdout.lock();
+    let mut rom = Rom::from_string(read_to_string("day2.in").unwrap());
 
-    let mut computer = Computer::build(&V1Cpu, rom, &mut in_handle, &mut out_handle);
-    computer.read_line().unwrap();
-    computer.print_buf();
+    rom[1] = 12;
+    rom[2] = 2;
+
+    let mut computer = Computer::build(&V1Cpu, rom);
+
+    computer.run();
+    let rom = computer.rom();
+    println!("{:?}", rom); 
 }
