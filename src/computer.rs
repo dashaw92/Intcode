@@ -10,6 +10,7 @@ pub struct Computer<'cpu> {
     stdin_buf: Vec<u8>,
 }
 
+#[derive(Debug)]
 pub struct State {
     pub ip: usize,
     pub steps: usize,
