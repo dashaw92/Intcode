@@ -10,13 +10,14 @@ pub struct V2Cpu;
 impl Cpu for V2Cpu {
     fn exec(&self, state: &mut State, rom: &mut Rom) -> Execution {
         let op = rom[state.ip];
-
-        let decoded = (op % 100) as usize;
-        if decoded >= OPCODES.len() {
-            return Execution::Halted;
-        }
-
-        let op = OPCODES[decoded];
+        let decoded = op % 100;
+        let op: &dyn Opcode = match decoded {
+            1 => &Add as &dyn Opcode,
+            2 => &Mul as &dyn Opcode,
+            3 => &In as &dyn Opcode,
+            4 => &Out as &dyn Opcode,
+            _ => return Execution::Halted,
+        };
 
         op.apply(state, rom);
         state.inc(op.len());
